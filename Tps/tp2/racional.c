@@ -39,18 +39,11 @@ long mdc(long a, long b)
   return a;
 }
 
-/* Mínimo Múltiplo Comum entre a e b */
-/* mmc = (a * b) / mdc (a, b)        */
 long mmc(long a, long b)
 {
   return (a * b) / mdc(a, b);
 }
 
-/* Recebe um número racional e o simplifica.
- * Por exemplo, ao receber 10/8 deve retornar 5/4.
- * Se ambos numerador e denominador forem negativos, deve retornar um positivo.
- * Se o denominador for negativo, o sinal deve migrar para o numerador.
- * Se r for inválido, devolve-o sem simplificar. */
 struct racional simplifica_r(struct racional r)
 {
   if (valido_r(r) == 0)
@@ -143,30 +136,28 @@ int compara_r(struct racional r1, struct racional r2)
     return 0; /* testa se r1 = r2 */
 
   else if (resultado1 < resultado2)
-    return -1;  /*testa se r1 < r2*/
+    return -1; /*testa se r1 < r2*/
 
   else
     return 1; /*testa se r1 > r2*/
 }
 
-int soma_r (struct racional r1, struct racional r2, struct racional *r3)
+int soma_r(struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional aux;
-  
+
   long multiplo;
 
   if (!valido_r(r1) || !valido_r(r2) || !r3)
     return 0;
-  
 
   else if (r1.den != r2.den)
   {
     multiplo = mmc(r1.den, r2.den);
 
-    aux.num = (multiplo / r1.den * r1.num)+(multiplo / r2.den * r2.num);
+    aux.num = (multiplo / r1.den * r1.num) + (multiplo / r2.den * r2.num);
 
     aux.den = multiplo;
-
   }
 
   else
@@ -174,8 +165,76 @@ int soma_r (struct racional r1, struct racional r2, struct racional *r3)
     aux.den = r1.den;
     aux.num = r1.num + r2.num;
   }
-  
+
   *r3 = simplifica_r(aux);
-  
+
+  return 1;
+}
+
+int subtrai_r(struct racional r1, struct racional r2, struct racional *r3)
+{
+  struct racional aux;
+
+  long multiplo;
+
+  if (!valido_r(r1) || !valido_r(r2) || !r3)
+    return 0;
+
+  else if (r1.den != r2.den)
+  {
+    multiplo = mmc(r1.den, r2.den);
+
+    aux.num = (multiplo / r1.den * r1.num) - (multiplo / r2.den * r2.num);
+
+    aux.den = multiplo;
+  }
+
+  else
+  {
+    aux.den = r1.den;
+    aux.num = r1.num - r2.num;
+  }
+
+  *r3 = simplifica_r(aux);
+
+  return 1;
+}
+
+int multiplica_r(struct racional r1, struct racional r2, struct racional *r3)
+{
+  struct racional aux;
+
+  if (!valido_r(r1) || !valido_r(r2) || !r3)
+    return 0;
+
+  else
+  {
+    aux.num = r1.num * r2.num;
+    aux.den = r1.den * r2.den;
+  }
+
+  *r3 = simplifica_r(aux);
+
+  return 1;
+}
+
+int divide_r(struct racional r1, struct racional r2, struct racional *r3)
+{
+  struct racional aux;
+
+  if (!valido_r(r1) || !valido_r(r2) || !r3)
+    return 0;
+
+  else if (r2.num == 0)
+    return 0;
+
+  else
+  {
+    aux.num = r1.num * r2.den;
+    aux.den = r1.den * r2.num;
+  }
+
+  *r3 = simplifica_r(aux);
+
   return 1;
 }
