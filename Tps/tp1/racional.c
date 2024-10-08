@@ -152,6 +152,7 @@ struct racional soma_r(struct racional r1, struct racional r2)
     aux.num = (multiplo / r1.den * r1.num)+(multiplo / r2.den * r2.num);
 
     aux.den = multiplo;
+
   }
 
   else
