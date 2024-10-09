@@ -15,11 +15,8 @@
 int main()
 {
     struct racional vet[100];
-
-    int n, max, i;
-
-    struct racional fracao1;
-    struct racional fracao2;
+    int n, i;
+    long num, den;
 
     srand(0);
 
@@ -28,8 +25,11 @@ int main()
         scanf("%d", &n);
     } while (n < 0 || n > 100); // limita de 0 a 100
 
-    do
+    for (i = 0; i < n; i++)
     {
-        scanf("%d", &max);
-    } while (max < 0 || max > 30); // limita de 0 a 100
+        scanf("%ld %ld", &num, &den);
+    }
+    
+
+
 }
