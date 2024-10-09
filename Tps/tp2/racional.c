@@ -39,11 +39,18 @@ long mdc(long a, long b)
   return a;
 }
 
+/* Mínimo Múltiplo Comum entre a e b */
+/* mmc = (a * b) / mdc (a, b)        */
 long mmc(long a, long b)
 {
   return (a * b) / mdc(a, b);
 }
 
+/* Recebe um número racional e o simplifica.
+ * Por exemplo, ao receber 10/8 deve retornar 5/4.
+ * Se ambos numerador e denominador forem negativos, deve retornar um positivo.
+ * Se o denominador for negativo, o sinal deve migrar para o numerador.
+ * Se r for inválido, devolve-o sem simplificar. */
 struct racional simplifica_r(struct racional r)
 {
   if (valido_r(r) == 0)
@@ -105,7 +112,7 @@ void imprime_r(struct racional r)
   r = simplifica_r(r);
 
   if (valido_r(r) == 0)
-    printf("INVALIDO");
+    printf("NaN");
 
   else if (r.num == 0)
     printf("0");
@@ -125,6 +132,10 @@ void imprime_r(struct racional r)
 
 int compara_r(struct racional r1, struct racional r2)
 {
+  r1 = simplifica_r(r1); /*simplifica os numeros antes da operação*/
+  r2 = simplifica_r(r2);
+
+
   /* faz a multiplicação cruzada */
   long resultado1 = r1.num * r2.den;
   long resultado2 = r2.num * r1.den;

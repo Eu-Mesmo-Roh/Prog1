@@ -10,6 +10,42 @@
 #include "racional.h"
 
 /* coloque aqui as funções auxiliares que precisar neste arquivo */
+void imprimeVet(struct racional vet[], long tam)
+{
+    int i;
+
+    if (!vet)
+        return;
+
+    for (i = 0; i < tam; i++)
+    {
+        imprime_r(vet[i]);
+        printf(" ");
+    }
+        
+    printf("\n");       
+}
+
+void retiraNaN(struct racional vet[], long tam)
+{
+    int i;
+    
+    for (i = 0; i < tam; i++)
+    {
+        if (!valido_r(vet[i]))
+        {
+            while (!valido_r(vet[tam-1]))
+            {
+                tam--;
+            }
+            
+            vet[i] = vet[tam-1];
+        }
+        
+    }
+    
+}
+
 
 /* programa principal */
 int main()
@@ -28,8 +64,9 @@ int main()
     for (i = 0; i < n; i++)
     {
         scanf("%ld %ld", &num, &den);
+        vet[i] = cria_r(num, den);
     }
-    
 
+    imprimeVet(vet, n);
 
 }
