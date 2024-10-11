@@ -180,7 +180,7 @@ int compara_r(struct racional r1, struct racional r2)
 
 /* Retorna a soma dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
+ * 0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r(struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional aux;
@@ -246,7 +246,7 @@ int subtrai_r(struct racional r1, struct racional r2, struct racional *r3)
 
 /* Retorna a multiplicacao dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
+ * 0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int multiplica_r(struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional aux;
@@ -268,7 +268,7 @@ int multiplica_r(struct racional r1, struct racional r2, struct racional *r3)
 
 /* Retorna a divisao dos racionais r1 e r2 no parametro *r3.
  * Retorna 1 se a operacao foi bem sucedida ou
- *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
+ * 0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int divide_r(struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional aux;
@@ -288,4 +288,4 @@ int divide_r(struct racional r1, struct racional r2, struct racional *r3)
   *r3 = simplifica_r(aux);
 
   return 1;
-}
+} 
