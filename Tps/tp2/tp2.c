@@ -12,7 +12,7 @@
 /* coloque aqui as funções auxiliares que precisar neste arquivo */
 
 /* função que imprime o vetor na tela */
-void imprimeVet(struct racional vet[], long tam) 
+void imprimeVet(struct racional vet[], long tam)
 {
     int i;
 
@@ -38,10 +38,10 @@ int retiraNaN(struct racional vet[], long tam)
     for (i = 0; i < tam; i++)
     {
         /* verifica se o elemento do vetor na posição v[i] é valido*/
-        if (!valido_r(vet[i]))  
+        if (!valido_r(vet[i]))
         {
             /* verifica se o elemento na ultima posição do vetor é valido
-            * caso seja o remove */
+             * caso seja o remove */
             while (!valido_r(vet[tam - 1]))
                 tam--;
 
@@ -60,11 +60,11 @@ int retiraNaN(struct racional vet[], long tam)
 /* função que mescla as subpartes do vetor que ja foi ordenada*/
 void merge(struct racional vet[], int esquerda, int meio, int direita)
 {
-    /* variaveis que contem o tamanho das subpartes que serão mescladas 
-    * n1 = esquerda, n2 = direita */
+    /* variaveis que contem o tamanho das subpartes que serão mescladas
+     * n1 = esquerda, n2 = direita */
     int n1 = meio - esquerda + 1;
     int n2 = direita - meio;
-    
+
     /* sublistas temporarias sendo elas esquerda e direita */
     struct racional E[n1], D[n2];
 
@@ -109,8 +109,8 @@ void merge(struct racional vet[], int esquerda, int meio, int direita)
     }
 }
 
-/* função que implementa o metodo de ordenação merge sort quebrando o 
-*  vetor em subpates até que cada sublista contenha apenas um elemento */
+/* função que implementa o metodo de ordenação merge sort quebrando o
+ *  vetor em subpates até que cada sublista contenha apenas um elemento */
 void mergeSort(struct racional vet[], int esquerda, int direita)
 {
     if (esquerda < direita)
@@ -127,7 +127,6 @@ void mergeSort(struct racional vet[], int esquerda, int direita)
     }
 }
 
-
 /* função que soma todos os elementos do vetor */
 struct racional somaTodos(struct racional vet[], long tam)
 {
@@ -136,8 +135,7 @@ struct racional somaTodos(struct racional vet[], long tam)
     struct racional soma;
 
     if (!vet)
-        return cria_r(0,1);
-
+        return cria_r(0, 1);
 
     soma = vet[0];
 
@@ -145,7 +143,7 @@ struct racional somaTodos(struct racional vet[], long tam)
         soma_r(soma, vet[i], &soma);
 
     if (!valido_r(soma))
-        return cria_r(0,1);
+        return cria_r(0, 1);
 
     return soma;
 }
@@ -182,5 +180,5 @@ int main()
 
     printf("\n");
 
-        return 0;
+    return 0;
 }
