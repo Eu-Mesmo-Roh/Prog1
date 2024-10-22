@@ -126,11 +126,12 @@ void imprime_r (struct racional *r)
 
 int compara_r (struct racional *r1, struct racional *r2)
 {
+  long resultado1, resultado2;
   simplifica_r(r1);
   simplifica_r(r2);
 
-  long resultado1 = r1->num * r2->den;
-  long resultado2 = r2->num * r1->den;
+  resultado1 = r1->num * r2->den;
+  resultado2 = r2->num * r1->den;
 
   if (!valido_r(r1) || !valido_r(r2))
     return -2;

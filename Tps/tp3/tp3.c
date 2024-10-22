@@ -54,9 +54,107 @@ int retiraNaN(struct racional **vet, long tam)
   return tam;
 }
 
+void merge(struct racional **vet, int esquerda, int meio, int direita)
+{
+  int n1, n2;
+  /* variaveis que contem o tamanho das subpartes que serão mescladas
+   * n1 = esquerda, n2 = direita */
+  n1 = meio - esquerda + 1;
+  n2 = direita - meio;
+
+  /* sublistas temporarias sendo elas esquerda e direita */
+  struct racional **E, **D;
+
+  E = malloc(sizeof(struct racional *) * n1);
+  D = malloc(sizeof(struct racional *) * n2);
+
+  /* preenche as sublistas temporarias copiando os elementos do vetor original*/
+  for (int i = 0; i < n1; i++)
+    E[i] = vet[esquerda + i];
+  for (int j = 0; j < n2; j++)
+    D[j] = vet[meio + 1 + j];
+
+  /* inicializa as variaveis para percorrer as sublistas e o vetor original */
+  int i = 0, j = 0, k = esquerda;
+
+  /* compara os elementos das duas sublistas e copia o menor elemento para o vetor */
+  while (i < n1 && j < n2)
+  {
+    if (compara_r(E[i], D[j]) <= 0)
+    {
+      vet[k] = E[i];
+      i++;
+    }
+    else
+    {
+      vet[k] = D[j];
+      j++;
+    }
+    k++;
+  }
+
+  /* caso sobre elementos não processados nas sublistas, esses elementos são copiados para o vetor */
+  while (i < n1)
+  {
+    vet[k] = E[i];
+    i++;
+    k++;
+  }
+
+  while (j < n2)
+  {
+    vet[k] = D[j];
+    j++;
+    k++;
+  }
+
+  free(E);
+  free(D);
+}
+
+/* função que implementa o metodo de ordenação merge sort quebrando o
+ *  vetor em subpates até que cada sublista contenha apenas um elemento */
+void mergeSort(struct racional **vet, int esquerda, int direita)
+{
+  if (esquerda < direita)
+  {
+    /* se a sublista tiver mais de um elemento calcula o índice meio */
+    int meio = esquerda + (direita - esquerda) / 2;
+
+    /* chama de forma recursiva a função mergeSort para as duas metades do vetor */
+    mergeSort(vet, esquerda, meio);
+    mergeSort(vet, meio + 1, direita);
+
+    /* mescla as sublistas já ordenadas no vetor */
+    merge(vet, esquerda, meio, direita);
+  }
+}
+
+struct racional somaTodos(struct racional **vet, long tam)
+{
+  int i;
+
+  struct racional **soma;
+  soma = cria_r(0,1);
+
+  if (!vet)
+    return **soma;
+
+  soma = vet[0];
+
+  for (i = 1; i < tam; i++)
+    soma_r(soma, vet[i], soma);
+
+  if (!valido_r(soma))
+    return *cria_r(0, 1);
+
+  return **soma;
+}
+
 /* programa principal */
 int main()
 {
+  struct racional **vet, **soma;
   int n, i;
   long num, den;
 
@@ -67,7 +165,7 @@ int main()
     scanf("%d", &n);
   } while (n < 0 || n > 100); // limita de 0 a 100
 
-  struct racional **vet = malloc(sizeof(struct racional *) * n);
+  vet = malloc(sizeof(struct racional *) * n);
   if (vet == NULL)
   {
     fprintf(stderr, "Erro ao alocar memória.\n");
@@ -85,7 +183,8 @@ int main()
   n = retiraNaN(vet, n);
   imprimeVet(vet, n);
 
-  
+  mergeSort(vet, 0, n - 1);
+  imprimeVet(vet, n);
 
 
 
