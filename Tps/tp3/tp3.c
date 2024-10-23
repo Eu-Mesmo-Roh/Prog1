@@ -39,14 +39,18 @@ int retiraNaN(struct racional **vet, long tam)
     {
       /* verifica se o elemento na ultima posição do vetor é valido
        * caso seja o remove */
-      while (!valido_r(vet[tam - 1]))
+      while (!valido_r(vet[tam - 1]) && tam > 1)
+      {
         tam--;
+        destroi_r(vet[tam]);
+      }
 
       /* remove o elemento da posição v[i] */
       if (i != tam)
       {
-        vet[i] = vet[tam - 1];
         tam--;
+        destroi_r(vet[i]);
+        vet[i] = vet[tam];
       }
     }
   }
@@ -130,15 +134,14 @@ void mergeSort(struct racional **vet, int esquerda, int direita)
   }
 }
 
-struct racional somaTodos(struct racional **vet, long tam)
+struct racional *somaTodos(struct racional **vet, long tam)
 {
   int i;
 
-  struct racional **soma;
-  soma = cria_r(0,1);
+  struct racional *soma;
 
-  if (!vet)
-    return **soma;
+  if (!vet || !tam)
+    return NULL;
 
   soma = vet[0];
 
@@ -146,15 +149,28 @@ struct racional somaTodos(struct racional **vet, long tam)
     soma_r(soma, vet[i], soma);
 
   if (!valido_r(soma))
-    return *cria_r(0, 1);
+    return cria_r(0, 1);
 
-  return **soma;
+  return soma;
+}
+
+void destroiTodos(struct racional **vet, int tam)
+{
+  int i;
+  if (!vet)
+    return;
+
+  for (i = 0; i < tam; i++)
+  {
+    destroi_r(vet[i]);
+    vet[i] = NULL;
+  }
 }
 
 /* programa principal */
 int main()
 {
-  struct racional **vet, **soma;
+  struct racional **vet;
   int n, i;
   long num, den;
 
@@ -186,7 +202,20 @@ int main()
   mergeSort(vet, 0, n - 1);
   imprimeVet(vet, n);
 
+  printf("SOMA = ");
+  if (!somaTodos(vet, n))
+  {
+    printf("0");
+  }
+  else
+    imprime_r(somaTodos(vet, n));
+  printf("\n");
 
+  destroiTodos(vet, n);
+  imprimeVet(vet, n);
+  printf("\n");
+
+  free(vet);
 
   return (0);
 }
