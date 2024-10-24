@@ -134,22 +134,25 @@ void mergeSort(struct racional **vet, int esquerda, int direita)
   }
 }
 
-struct racional *somaTodos(struct racional **vet, long tam)
+struct racional* somaTodos(struct racional **vet, long tam)
 {
   int i;
 
-  struct racional *soma;
+  struct racional* soma;
+
+  soma = cria_r(0,1);
 
   if (!vet || !tam)
-    return NULL;
+    return soma;
 
-  soma = vet[0];
-
-  for (i = 1; i < tam; i++)
+  for (i = 0; i < tam; i++)
     soma_r(soma, vet[i], soma);
 
   if (!valido_r(soma))
+  {
+    free(soma);
     return cria_r(0, 1);
+  }
 
   return soma;
 }
@@ -170,7 +173,7 @@ void destroiTodos(struct racional **vet, int tam)
 /* programa principal */
 int main()
 {
-  struct racional **vet;
+  struct racional **vet, *psoma;
   int n, i;
   long num, den;
 
@@ -203,13 +206,11 @@ int main()
   imprimeVet(vet, n);
 
   printf("SOMA = ");
-  if (!somaTodos(vet, n))
-  {
-    printf("0");
-  }
-  else
-    imprime_r(somaTodos(vet, n));
+  psoma = somaTodos(vet, n);
+  imprime_r(psoma);
   printf("\n");
+  free(psoma);
+
 
   destroiTodos(vet, n);
   imprimeVet(vet, n);
