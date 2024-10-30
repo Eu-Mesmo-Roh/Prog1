@@ -47,7 +47,7 @@ int lista_retira (struct lista_t *lst, int *item, int pos);
 // se a posição for além do fim da lista ou for -1, consulta do fim.
 // Retorno: número de itens na lista ou -1 em erro.
 int lista_consulta (struct lista_t *lst, int *item, int pos);
-
+ 
 // Informa a posição da 1ª ocorrência do valor indicado na lista.
 // Retorno: posição do valor ou -1 se não encontrar ou erro.
 int lista_procura (struct lista_t *lst, int valor);
