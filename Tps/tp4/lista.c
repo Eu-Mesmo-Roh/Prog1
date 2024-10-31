@@ -121,9 +121,35 @@ int lista_insere(struct lista_t *lst, int item, int pos)
 
 int lista_retira (struct lista_t *lst, int *item, int pos)
 {
+    struct intem_t *aux;
+
+    if (lst == NULL)
+        return -1;
+    
+    if (lst->tamanho == 0 || pos > lst->tamanho)
+        return -1;
+
+    if (lst->tamanho == 1)
+    {
+        free(lst->prim);
+        lst->prim = NULL;
+        lst->ult = NULL;
+    }
+    
+    
+    if (pos < 0 || pos == lst->tamanho - 1)
+    {
+        
+    }
+    
+    
 
     
-    return 0;
+    
+
+    
+    
+    return lst->tamanho;
 }
 
 /* int lista_consulta (struct lista_t *lst, int *item, int pos)
