@@ -26,7 +26,9 @@ struct item_t *item_cria(int valor)
 
 void item_destroi(struct item_t *item)
 {
-    if (item != NULL)
+    if (item == NULL)
+        return;
+    else
         free(item);
 
     item = NULL;
@@ -35,8 +37,8 @@ void item_destroi(struct item_t *item)
 struct lista_t *lista_cria()
 {
     struct lista_t *lista;
-
     lista = malloc(sizeof(struct lista_t));
+
     if (lista == NULL)
         return NULL;
 
@@ -54,7 +56,7 @@ struct lista_t *lista_destroi(struct lista_t *lst)
     if (lst == NULL)
         return NULL;
 
-    atual = lst->prim; /*atual recebe a primeira posição da lista*/
+    atual = lst->prim;
 
     while (atual != NULL)
     {
@@ -103,66 +105,163 @@ int lista_insere(struct lista_t *lst, int item, int pos)
     else
     {
         aux = lst->prim;
-        while (aux->prox != NULL || pos != 0)
+        while (aux->prox != NULL && pos != 0)
         {
             aux = aux->prox;
             pos--;
         }
-        novo_item->prox = aux->prox;
-        novo_item->ant = aux;
-        aux->prox = novo_item;
-        aux->prox->ant = novo_item;
+
+        novo_item->prox = aux;
+        novo_item->ant = aux->ant;
+
+        aux->ant->prox = novo_item;
+        aux->ant = novo_item;
     }
     lst->tamanho++;
 
     return lst->tamanho;
 }
 
-
-int lista_retira (struct lista_t *lst, int *item, int pos)
+struct item_t *item_poteiro_pos(struct lista_t *lst, int pos)
 {
-    struct intem_t *aux;
+    struct item_t *aux;
 
-    if (lst == NULL)
+    if (!lst)
+        return NULL;
+
+    /*percorre lista e decrementa posição até achar elemento*/
+    aux = lst->prim;
+    while (aux != NULL && pos != 0)
+    {
+        aux = aux->prox;
+        pos--;
+    }
+
+    /*retorna NULL caso não encontre*/
+    return aux;
+}
+
+int lista_retira(struct lista_t *lst, int *item, int pos)
+{
+    struct item_t *aux;
+
+    if (lst == NULL || item == NULL)
         return -1;
-    
+
     if (lst->tamanho == 0 || pos > lst->tamanho)
         return -1;
-
-    if (lst->tamanho == 1)
+    else if (pos == 0)
     {
-        free(lst->prim);
-        lst->prim = NULL;
-        lst->ult = NULL;
+        aux = lst->prim;
+        if (lst->tamanho == 1)
+        {
+            lst->prim = NULL;
+            lst->ult = NULL;
+        }
+        else
+        {
+            lst->prim = aux->prox;
+            aux->prox->ant = NULL;
+        }
     }
-    
-    
-    if (pos < 0 || pos == lst->tamanho - 1)
+    else if (pos < 0 || pos == lst->tamanho)
     {
-        
+        aux = lst->ult;
+        lst->ult = aux->ant;
+        aux->ant->prox = NULL;
     }
-    
-    
+    else
+    {
+        aux = lst->prim;
+        while (aux->prox != NULL && pos != 0)
+        {
+            aux = aux->prox;
+            pos--;
+        }
 
-    
-    
+        aux->ant->prox = aux->prox;
+        aux->prox->ant = aux->ant;
+    }
 
-    
-    
+    *item = aux->valor;
+    item_destroi(aux);
+    lst->tamanho--;
+
     return lst->tamanho;
 }
 
-/* int lista_consulta (struct lista_t *lst, int *item, int pos)
+int lista_consulta(struct lista_t *lst, int *item, int pos)
 {
+    struct item_t *aux;
 
-
-    if (lst->tamanho == 0)
+    if (lst == NULL || item == NULL)
         return -1;
-    
-    if (pos > lst->tamanho || pos < 0)
+
+    aux = lst->prim;
+    if (pos < 0)
+        aux = lst->ult;
+    else if (pos > lst->tamanho - 1)
+        return -1;
+    else
     {
-        
+        while (aux != NULL && pos != 0)
+        {
+            aux = aux->prox;
+            pos--;
+        }
     }
 
-    
-} */
+    *item = aux->valor;
+
+    return lst->tamanho;
+}
+
+int lista_procura(struct lista_t *lst, int valor)
+{
+    struct item_t *aux;
+    int cont;
+
+    if (lst == NULL)
+        return -1;
+
+    aux = lst->prim;
+    cont = 0;
+
+    while (aux != NULL && valor != aux->valor)
+    {
+        aux = aux->prox;
+        cont++;
+    }
+
+    if (aux == NULL)
+        return -1;
+
+    return cont;
+}
+
+int lista_tamanho(struct lista_t *lst)
+{
+    if (lst == NULL)
+        return -1;
+
+    return lst->tamanho;
+}
+
+void lista_imprime(struct lista_t *lst)
+{
+    struct item_t *aux;
+
+    if (lst == NULL)
+        return;
+
+    aux = lst->prim;
+
+    while (aux != NULL)
+    {
+        printf("%d", aux->valor);
+        aux = aux->prox;
+
+        if (aux != NULL)
+            printf(" ");
+    }
+}
