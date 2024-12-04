@@ -2,6 +2,11 @@
 // Autor: Ronaldo Pereira da Costa, GRR 20240514
 
 // seus #includes vão aqui
+#include <stdio.h>
+#include <stdlib.h>
+#include "fprio.h"
+#include "lista.h"
+#include "conjunto.h"
 
 // seus #defines vão aqui
 
