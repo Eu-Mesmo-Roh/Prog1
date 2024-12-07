@@ -7,6 +7,7 @@
 #include "fprio.h"
 #include "lista.h"
 #include "conjunto.h"
+#include "entidades.h"
 
 // seus #defines vão aqui
 
@@ -15,11 +16,18 @@
 // programa principal
 int main ()
 {
-  // iniciar o mundo
+  struct mundo_t *mundo;
+  
+  mundo = cria_mundo();
 
-  // executar o laço de simulação
+  if (!mundo)
+  {
+    printf("deu pau");
+    return (0); /* pensar como liberar memoria se der erro */
+  }
+    
 
-  // destruir o mundo
+  destroi_mundo(mundo);
 
   return (0) ;
 }
