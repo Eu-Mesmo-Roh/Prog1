@@ -18,6 +18,7 @@ struct local_t
     int y; /* cordenadas y */
 };
 
+
 /* Descreve um Heroi */
 struct heroi_t
 {
@@ -44,6 +45,7 @@ struct missao_t
 {
     int id;                    /* número inteiro ≥ 0 que identifica a missão */
     struct cjto_t *habilidades; /* conjunto de habilidades necessárias para cumprir a missão */
+    int realizadas;             /* caso a missao tenha sido concluida ou não */
     int perigo;                /* nível de perigo da missão */
     int tentativas;            /* número de tentativas de cumprir a missão */
     struct local_t *coordenadas;              /* localização da missão */
@@ -51,7 +53,7 @@ struct missao_t
 
 /* Descreve um mundo */
 struct mundo_t
-{
+{   
     struct heroi_t *herois;    /* vetor representando todos os heróis */
     struct base_t *bases;      /* vetor representando todas as bases */
     struct missao_t *missoes; /* vetor representando todas as missões */
@@ -59,8 +61,9 @@ struct mundo_t
     int NBases;              /* número total de bases no mundo */
     int NMissoes;            /* número total de missões a cumprir */
     int NHabilidades;        /* número de habilidades distintas possíveis */
+    int NMissaoImpossivel;    /*numero de missões impossiveis */
     int tamanhoMundo;        /* coordenadas máximas do mundo */
-    int relogio;             /* número inteiro ≥ 0 indicando o tempo atual no mundo. */
+    int tempo;             /* número inteiro ≥ 0 indicando o tempo atual no mundo. */
 };
 
 /* Retorna um inteiro aleatório */
@@ -68,27 +71,27 @@ int gera_valor_aleatorio(int min, int max);
 
 /* cria um heroi */
 /* Retorno: ponteiro para o heroi criado ou NULL se erro */
-struct heroi_t *cria_heroi(int NHerois);
+struct heroi_t *cria_heroi(struct mundo_t *mundo);
 
 /* Libera todas as estruturas de dados do heroi */
 /* Retorno: NULL */
-void destroi_heroi(struct heroi_t *heroi);
+void destroi_heroi(struct mundo_t *mundo);
 
 /* cria uma base */
 /* Retorno: ponteiro para a base criada ou NULL se erro */
-struct base_t *cria_base(int NBases, int tamanhoMundo);
+struct base_t *cria_base(struct mundo_t *mundo);
 
 /* Libera todas as estruturas de dados da base */
 /* Retorno: NULL */
-void destroi_base(struct base_t *base);
+void destroi_base(struct mundo_t *mundo);
 
 /* cria uma missão */
 /* Retorno: ponteiro para a missão criada ou NULL se erro */
-struct missao_t *cria_missao(int NMissao, int tamanhoMundo);
+struct missao_t *cria_missao(struct mundo_t *mundo);
 
 /* Libera todas as estruturas de dados da missão */
 /* Retorno: NULL */
-void destroi_missao(struct missao_t *missao);
+void destroi_missao(struct mundo_t *mundo);
 
 /* cria um mundo */
 /* Retorno: ponteiro para o mundo criado ou NULL se erro */
