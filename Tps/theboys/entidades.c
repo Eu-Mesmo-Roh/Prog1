@@ -26,6 +26,7 @@ struct heroi_t *cria_heroi(struct mundo_t *mundo)
         novo_heroi[i].velocidade = gera_valor_aleatorio(50, 5000);
         novo_heroi[i].habilidades = cjto_cria(gera_valor_aleatorio(1, 3));
         novo_heroi[i].base = -10;
+        novo_heroi[i].status = 1;
     }
 
     return novo_heroi;
@@ -165,6 +166,7 @@ struct mundo_t *cria_mundo()
     novo_mundo->missoes = cria_missao(novo_mundo);
     novo_mundo->NMissaoImpossivel = 0;
     novo_mundo->tempo = T_INICIO;
+    
 
     return novo_mundo;
 }

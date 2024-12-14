@@ -20,6 +20,13 @@
 #define EVENT_MISSAO 9
 #define EVENT_FIM 10
 
+/*Define para vazio*/
+#define id_vazio -10
+#define sem_missao -10
+
+/*Define Lista*/
+#define fim_da_lista -1 /* fim */
+#define inicio_da_lista 0 /* inicio */
 
 /* Descreve um Evento */
 struct evento_t
@@ -50,9 +57,9 @@ void evento_entra(struct mundo_t *mundo, int tempo, int id_heroi, int id_base, s
 
 void evento_sai(struct mundo_t *mundo, int tempo, int id_heroi, int id_base, struct fprio_t *fprio);
 
-void evento_viaja(struct mundo_t *mundo, int tempo, int id_heroi, int id_base, int id_base_destino, struct fprio_t *fprio);
+void evento_viaja(struct mundo_t *mundo, int tempo, int id_heroi, int id_base_destino, struct fprio_t *fprio);
 
-void evento_morre(struct mundo_t *mundo, int tempo, int id_heroi, struct fprio_t *fprio);
+void evento_morre(struct mundo_t *mundo, int tempo, int id_heroi, int id_missao,struct fprio_t *fprio);
 
 void evento_missao(struct mundo_t *mundo, int tempo, int id_missao, struct fprio_t *fprio);
 

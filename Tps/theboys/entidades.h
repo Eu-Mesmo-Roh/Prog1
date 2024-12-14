@@ -28,6 +28,7 @@ struct heroi_t
     int velocidade;  /* número inteiro ≥ 0 indicando a velocidade de deslocamento de um herói */
     int experiencia; /* número inteiro ≥ 0 que indica o número de missões em que o herói já participou */
     int base;        /* ID da base onde o herói se encontra no momento */
+    int status;      /* verifica se o heroi esta vivo ou morto */
 };
 
 /* Descreve a base dos Herois */
